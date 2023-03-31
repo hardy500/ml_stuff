@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 
 def get_xy(data):
@@ -30,7 +30,7 @@ def get_data(train=True):
     x = train_data
 
   x1, x2 = encode(x)
-  scaler = StandardScaler()
+  scaler = MinMaxScaler()
   x1 = pd.DataFrame(scaler.fit_transform(x1), columns=x1.columns)
   x = pd.concat([x1, x2], axis=1)
 
@@ -39,3 +39,4 @@ def get_data(train=True):
 
   x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.2, random_state=42)
   return x_train, x_val, y_train, y_val
+
