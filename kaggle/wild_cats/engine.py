@@ -1,6 +1,5 @@
-
 import torch
-from torch.utils.tensorboard import SummaryWriter
+from torch.utils.tensorboard.writer import SummaryWriter
 from tqdm import tqdm
 
 class Engine:
@@ -13,15 +12,14 @@ class Engine:
     self.trainloader = None
     self.validloader = None
 
-    self.train_loss = 0
-    self.val_loss = 0
-
   def set_loader(self, trainloader, validloader):
     self.trainloader = trainloader
     self.validloader = validloader
 
   def train_step(self):
     self.model.train()
+    self.train_loss = 0
+    assert self.trainloader is not None
     for x, y in self.trainloader:
       x, y = x.to(self.device), y.to(self.device)
       self.optimizer.zero_grad()
@@ -37,11 +35,15 @@ class Engine:
 
   def eval_step(self):
     self.model.eval()
+    self.val_loss = 0
     with torch.inference_mode():
+      assert self.validloader is not None
       for x, y in self.validloader:
         x, y = x.to(self.device), y.to(self.device)
         out = self.model(x)
         loss = self.loss_fn(out, y)
+
+        # accumulate loss
         self.val_loss += loss.item()
       self.val_loss /= len(self.validloader)
 

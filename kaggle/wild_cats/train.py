@@ -2,8 +2,8 @@
 import torch
 from torch import nn, optim
 import torchvision.models as models
-from preprocess import get_loader
-from engine import Engine
+from .preprocess import get_loader
+from .engine import Engine
 
 #%%
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
