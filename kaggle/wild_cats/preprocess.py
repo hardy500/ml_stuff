@@ -1,4 +1,3 @@
-#%%
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
@@ -25,7 +24,7 @@ def get_data():
   path = 'data/WILDCATS.CSV'
   data = 'data set'
   df = pd.read_csv(path)
-  train  = df[df[data]=='train'].iloc[:300]
+  train  = df[df[data]=='train']
   valid  = df[df[data]=='valid']
   test  = df[df[data]=='test']
   return train, valid, test
