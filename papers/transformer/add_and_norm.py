@@ -3,7 +3,7 @@ from torch import nn
 
 class AddAndNorm(nn.Module):
     def __init__(self, d_model: int):
-        super().__init_()
+        super().__init__()
         self.norm = nn.LayerNorm(d_model)
 
     def forward(self, x: torch.Tensor, residual: torch.Tensor) -> torch.Tensor:
