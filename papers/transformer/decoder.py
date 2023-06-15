@@ -66,6 +66,8 @@ class Decoder(nn.Module):
               source_mask: torch.Tensor,
               target_mask: torch.Tensor) -> torch.Tensor:
 
+    if x.dtype != encoder_out.dtype:
+      x = x.type(torch.float32)
     for block in self.blocks:
       x = block(x, encoder_out, source_mask, target_mask)
     return x
